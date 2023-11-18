@@ -1,0 +1,41 @@
+# Compiled class file
+*.class
+
+# Log files
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+# IntelliJ project files
+.idea/
+*.iml
+*.iws
+
+# NetBeans project files
+nb-configuration.xml
+
+# Maven-specific files
+target/
+pom.xml.backup
+release.properties
+pom.xml.releaseBackup
+
+# Gradle-specific files
+.gradle/
+build/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# User-specific files
+*.idea/workspace.xml
+*.iml
+*.ipr
+*.iws
