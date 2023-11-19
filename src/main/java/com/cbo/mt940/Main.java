@@ -13,6 +13,6 @@ public class Main {
         // Example for multiple transactions
         List<MT940Message> multipleTransactions = new ArrayList<>();
         // Populate the list with transaction details
-        MT940FileWriter.writeToFile(multipleTransactions, "multipleTransactions.mt940");
+//        MT940FileWriter.writeToFile(multipleTransactions, "multipleTransactions.mt940");
     }
 }

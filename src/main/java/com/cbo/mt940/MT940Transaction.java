@@ -208,7 +208,8 @@ public class MT940Transaction {
                 .append(transactionTypeIDCode)
                 .append(customerReference)
                 .append(bankReference != null ? "//" + bankReference : "")
-                .append(supplementaryDetails != null ? "\n" + supplementaryDetails : "");
+                .append(supplementaryDetails != null ? "\n" + supplementaryDetails : "")
+                .append("\n");
 
         return sb.toString();
     }
