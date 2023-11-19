@@ -2,7 +2,7 @@ package com.cbo.mt940;
 
 import java.util.regex.Pattern;
 
-public class MT940Transaction {
+public class MT940Tag61 {
     private String valueDate;
     private String entryDate;
     private String debitCreditMark;
@@ -81,7 +81,7 @@ public class MT940Transaction {
      * @throws IllegalArgumentException If the transaction type ID code is invalid.
      */
     public void setTransactionTypeIDCode(String transactionTypeIDCode) {
-        if (transactionTypeIDCode == null || !Pattern.matches("[A-Za-z0-9 .,()/'+:?{}]{1,3}", transactionTypeIDCode)) {
+        if (transactionTypeIDCode == null || !Pattern.matches("[NF]{1}[A-Z]{3}", transactionTypeIDCode)) {
             throw new IllegalArgumentException("Invalid transaction type ID code");
         }
         this.transactionTypeIDCode = transactionTypeIDCode;

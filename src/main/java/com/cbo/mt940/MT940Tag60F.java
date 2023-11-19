@@ -1,14 +1,12 @@
 package com.cbo.mt940;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
 public class MT940Tag60F {
-
     private String debitCreditMark;
     private Date statementDate;
     private String currency;
@@ -32,6 +30,87 @@ public class MT940Tag60F {
         this.statementDate = parseStatementDate(statementDate);
         this.currency = currency;
         this.amount = parseAmount(amount);
+    }
+
+
+    /**
+     * Sets the Debit/Credit Mark for Tag 60F.
+     *
+     * @param debitCreditMark The Debit/Credit Mark to set.
+     * @throws IllegalArgumentException If the provided Debit/Credit Mark is invalid.
+     */
+    public void setDebitCreditMark(String debitCreditMark) {
+        validateDebitCreditMark(debitCreditMark);
+        this.debitCreditMark = debitCreditMark;
+    }
+
+    /**
+     * Sets the Statement Date for Tag 60F.
+     *
+     * @param statementDate The Statement Date to set.
+     * @throws IllegalArgumentException If the provided Statement Date is invalid.
+     */
+    public void setStatementDate(String statementDate) {
+        validateStatementDate(statementDate);
+        this.statementDate = parseStatementDate(statementDate);
+    }
+
+    /**
+     * Sets the Currency for Tag 60F.
+     *
+     * @param currency The Currency to set.
+     * @throws IllegalArgumentException If the provided Currency is invalid.
+     */
+    public void setCurrency(String currency) {
+        validateCurrency(currency);
+        this.currency = currency;
+    }
+
+    /**
+     * Sets the Amount for Tag 60F.
+     *
+     * @param amount The Amount to set.
+     * @throws IllegalArgumentException If the provided Amount is invalid.
+     */
+    public void setAmount(String amount) {
+        validateAmount(amount);
+        this.amount = parseAmount(amount);
+    }
+
+    /**
+     * Gets the Debit/Credit Mark for Tag 60F.
+     *
+     * @return The Debit/Credit Mark.
+     */
+    public String getDebitCreditMark() {
+        return debitCreditMark;
+    }
+
+    /**
+     * Gets the Statement Date for Tag 60F.
+     *
+     * @return The Statement Date.
+     */
+    public Date getStatementDate() {
+        return statementDate;
+    }
+
+    /**
+     * Gets the Currency for Tag 60F.
+     *
+     * @return The Currency.
+     */
+    public String getCurrency() {
+        return currency;
+    }
+
+    /**
+     * Gets the Amount for Tag 60F.
+     *
+     * @return The Amount.
+     */
+    public String getAmount() {
+        return amount;
     }
 
     /**
@@ -99,7 +178,7 @@ public class MT940Tag60F {
      * @throws IllegalArgumentException If the Amount is invalid.
      */
     private void validateAmount(String amount) {
-        String pattern = "\\d{1,3}(,\\d{3})*(\\.\\d{2})?";
+        String pattern = "\\d{1,15}(,\\d{2})?";
         if (amount == null || !Pattern.matches(pattern, amount)) {
             throw new IllegalArgumentException("Invalid Amount for Tag 60F");
         }
@@ -109,7 +188,7 @@ public class MT940Tag60F {
      * Parses the Amount from the provided string (with comma as decimal separator).
      *
      * @param amount The Amount string to parse.
-     * @return TThe parsed Amount as a formatted string.
+     * @return The parsed Amount as a formatted string.
      * @throws IllegalArgumentException If the Amount is invalid.
      */
     private String parseAmount(String amount) {
@@ -122,11 +201,9 @@ public class MT940Tag60F {
             // Remove commas and replace dots with commas
             return decimalFormat.format(parsedValue).replace(",", "").replace(".", ",");
         } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid Amount for Tag 64");
+            throw new IllegalArgumentException("Invalid Amount for Tag 60F");
         }
     }
-
-
 
     // Other methods as needed
 
@@ -142,10 +219,4 @@ public class MT940Tag60F {
                 amount);
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        MT940Tag60F tag60F = new MT940Tag60F();
-        tag60F.setOpeningBalance("C", "231115", "ETB", "6,994,609.00");
-        System.out.println(tag60F.toString());
-    }
 }

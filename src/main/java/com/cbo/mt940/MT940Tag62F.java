@@ -6,14 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-public class MT940Tag62 {
+public class MT940Tag62F {
     private String debitCreditMark;
     private Date valueDate;
     private String currency;
     private String amount;
 
     /**
-     * Sets the Closing Balance (Booked Funds) for Tag 62.
+     * Sets the Closing Balance (Booked Funds) for Tag 62F.
      *
      * @param debitCreditMark The Debit/Credit Mark to set (C = Credit, D = Debit).
      * @param valueDate       The Value Date to set (format: YYMMDD).
@@ -33,7 +33,43 @@ public class MT940Tag62 {
     }
 
     /**
-     * Validates the Debit/Credit Mark for Tag 62.
+     * Gets the Debit/Credit Mark for Tag 62F.
+     *
+     * @return The Debit/Credit Mark.
+     */
+    public String getDebitCreditMark() {
+        return debitCreditMark;
+    }
+
+    /**
+     * Gets the Value Date for Tag 62F.
+     *
+     * @return The Value Date.
+     */
+    public Date getValueDate() {
+        return valueDate;
+    }
+
+    /**
+     * Gets the Currency for Tag 62F.
+     *
+     * @return The Currency.
+     */
+    public String getCurrency() {
+        return currency;
+    }
+
+    /**
+     * Gets the Amount for Tag 62F.
+     *
+     * @return The Amount.
+     */
+    public String getAmount() {
+        return amount;
+    }
+
+    /**
+     * Validates the Debit/Credit Mark for Tag 62F.
      * It should be a single character (C = Credit, D = Debit).
      *
      * @param debitCreditMark The Debit/Credit Mark to validate.
@@ -41,12 +77,12 @@ public class MT940Tag62 {
      */
     private void validateDebitCreditMark(String debitCreditMark) {
         if (debitCreditMark == null || !Pattern.matches("[CD]{1}", debitCreditMark)) {
-            throw new IllegalArgumentException("Invalid Debit/Credit Mark for Tag 62");
+            throw new IllegalArgumentException("Invalid Debit/Credit Mark for Tag 62F");
         }
     }
 
     /**
-     * Validates the Value Date for Tag 62.
+     * Validates the Value Date for Tag 62F.
      * It should be a string with a length of 6 characters representing YYMMDD.
      *
      * @param valueDate The Value Date to validate.
@@ -55,7 +91,7 @@ public class MT940Tag62 {
     private void validateValueDate(String valueDate) {
         String pattern = "\\d{6}";
         if (valueDate == null || !Pattern.matches(pattern, valueDate)) {
-            throw new IllegalArgumentException("Invalid Value Date for Tag 62");
+            throw new IllegalArgumentException("Invalid Value Date for Tag 62F");
         }
     }
 
@@ -72,12 +108,12 @@ public class MT940Tag62 {
             dateFormat.setLenient(false);
             return dateFormat.parse(valueDate);
         } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid Value Date for Tag 62");
+            throw new IllegalArgumentException("Invalid Value Date for Tag 62F");
         }
     }
 
     /**
-     * Validates the Currency for Tag 62.
+     * Validates the Currency for Tag 62F.
      * It should be a string with a length of 3 characters representing the ISO currency code.
      *
      * @param currency The Currency to validate.
@@ -85,21 +121,21 @@ public class MT940Tag62 {
      */
     private void validateCurrency(String currency) {
         if (currency == null || !Pattern.matches("[A-Z]{3}", currency)) {
-            throw new IllegalArgumentException("Invalid Currency for Tag 62");
+            throw new IllegalArgumentException("Invalid Currency for Tag 62F");
         }
     }
 
     /**
-     * Validates the Amount for Tag 62.
+     * Validates the Amount for Tag 62F.
      * It should be a string representing the amount with a comma as a decimal separator.
      *
      * @param amount The Amount to validate.
      * @throws IllegalArgumentException If the Amount is invalid.
      */
     private void validateAmount(String amount) {
-        String pattern = "\\d{1,3}(,\\d{3})*(\\.\\d{2})?";
+        String pattern = "\\d{1,15}(,\\d{2})?";
         if (amount == null || !Pattern.matches(pattern, amount)) {
-            throw new IllegalArgumentException("Invalid Amount for Tag 62");
+            throw new IllegalArgumentException("Invalid Amount for Tag 62F");
         }
     }
 
@@ -120,27 +156,21 @@ public class MT940Tag62 {
             // Remove commas and replace dots with commas
             return decimalFormat.format(parsedValue).replace(",", "").replace(".", ",");
         } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid Amount for Tag 62");
+            throw new IllegalArgumentException("Invalid Amount for Tag 62F");
         }
     }
 
     // Other methods as needed
 
     /**
-     * Returns the formatted Tag 62 content.
+     * Returns the formatted Tag 62F content.
      *
-     * @return The formatted Tag 62 content.
+     * @return The formatted Tag 62F content.
      */
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
-        return String.format(":62:%s%s%s%s\n", debitCreditMark, dateFormat.format(valueDate), currency, amount);
+        return String.format(":62F:%s%s%s%s\n", debitCreditMark, dateFormat.format(valueDate), currency, amount);
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        MT940Tag62 tag62 = new MT940Tag62();
-        tag62.setClosingBalance("C", "231115", "ETB", "6,461,201.00");
-        System.out.println(tag62.toString());
-    }
 }
